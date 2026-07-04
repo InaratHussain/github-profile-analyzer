@@ -49,108 +49,68 @@ github-profile-analyzer/
 
 ---
 
-## Installation
+## 🚀 Live Deployment
 
-### 1. Clone the repository
+This project is fully deployed and ready to use.
 
-```bash
-git clone <repository-url>
-cd github-profile-analyzer
+👉 **Base URL:**
+
 ```
-
-### 2. Install dependencies
-
-```bash
-npm install
-```
-
-### 3. Create MySQL database
-
-Run the SQL inside `schema.sql`.
-
-```sql
-CREATE DATABASE github_analyzer;
-USE github_analyzer;
-
-CREATE TABLE github_profiles (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100) UNIQUE,
-    name VARCHAR(255),
-    public_repos INT,
-    followers INT,
-    following INT,
-    public_gists INT,
-    account_created DATE,
-    profile_url VARCHAR(255),
-    avatar_url VARCHAR(255),
-    analyzed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-### 4. Configure environment variables
-
-Create a `.env` file.
-
-```env
-PORT=5000
-
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_password
-DB_NAME=github_analyzer
-```
-
-> **Note:** If your MySQL password contains special characters such as `#`, wrap it in quotes.
->
-> Example:
->
-> ```
-> DB_PASSWORD="MyPassword#"
-> ```
-
-### 5. Start the server
-
-```bash
-npm start
+https://github-profile-analyzer-tl77.onrender.com/api
 ```
 
 ---
 
-# Base URL
+## 📌 How to Access This API (Postman Guide)
+
+You can test all endpoints using **Postman** or any API client.
+
+---
+
+### 🔹 Step 1: Open Postman
+
+Download if needed:
+[https://www.postman.com/downloads/](https://www.postman.com/downloads/)
+
+---
+
+### 🔹 Step 2: Set Base URL
+
+Use this base URL for all requests:
 
 ```
-http://localhost:5000/api
+https://github-profile-analyzer-tl77.onrender.com/api
 ```
 
 ---
 
-# API Endpoints
+# 🔥 API Endpoints Usage
+
+---
 
 ## 1. Analyze GitHub Profile
 
-### Endpoint
+### 👉 Request Type:
 
 ```
-POST /api/analyze/:username
+POST
 ```
 
-### Example Request
+### 👉 URL:
 
 ```
-POST /api/analyze/octocat
+https://github-profile-analyzer-tl77.onrender.com/api/analyze/octocat
 ```
+
+### 👉 How to use in Postman:
+
+* Select **POST**
+* Paste URL
+* Click **Send**
 
 ---
 
-### Scenario 1: User exists on GitHub and is not yet in the database
-
-The application:
-
-* Fetches data from GitHub
-* Stores it in MySQL
-* Returns the GitHub profile
-
-Example Response
+### ✅ Example Response:
 
 ```json
 {
@@ -169,38 +129,7 @@ Example Response
 
 ---
 
-### Scenario 2: User already exists in the database
-
-The application:
-
-* Fetches the latest profile from GitHub
-* Updates the existing database record
-* Updates the `analyzed_at` timestamp
-* Returns the latest GitHub data
-
-Example Response
-
-```json
-{
-  "message": "Profile analyzed successfully",
-  "data": {
-    "login": "octocat",
-    "followers": 18500
-  }
-}
-```
-
----
-
-### Scenario 3: GitHub user does not exist
-
-Example Request
-
-```
-POST /api/analyze/random_user_that_does_not_exist
-```
-
-Response
+### ⚠️ If user does not exist:
 
 ```json
 {
@@ -208,7 +137,7 @@ Response
 }
 ```
 
-Status Code
+Status:
 
 ```
 404 Not Found
@@ -216,21 +145,29 @@ Status Code
 
 ---
 
-## 2. Get All Profiles
+## 2. Get All Stored Profiles
 
-### Endpoint
-
-```
-GET /api/profiles
-```
-
-### Example Request
+### 👉 Request Type:
 
 ```
-GET /api/profiles
+GET
 ```
 
-### Example Response
+### 👉 URL:
+
+```
+https://github-profile-analyzer-tl77.onrender.com/api/profiles
+```
+
+### 👉 How to use:
+
+* Select **GET**
+* Paste URL
+* Click **Send**
+
+---
+
+### Example Response:
 
 ```json
 [
@@ -239,43 +176,29 @@ GET /api/profiles
     "username": "octocat",
     "public_repos": 8,
     "followers": 18000
-  },
-  {
-    "id": 2,
-    "username": "torvalds",
-    "public_repos": 7,
-    "followers": 250000
   }
 ]
 ```
 
 ---
 
-### Scenario: No profiles stored
-
-```json
-[]
-```
-
----
-
 ## 3. Get Single Profile
 
-### Endpoint
+### 👉 Request Type:
 
 ```
-GET /api/profiles/:username
+GET
+```
+
+### 👉 URL:
+
+```
+https://github-profile-analyzer-tl77.onrender.com/api/profiles/octocat
 ```
 
 ---
 
-### Example Request
-
-```
-GET /api/profiles/octocat
-```
-
-### Example Response
+### Example Response:
 
 ```json
 {
@@ -289,7 +212,7 @@ GET /api/profiles/octocat
 
 ---
 
-### Scenario: Username not present in the database
+### ⚠️ If user not in database:
 
 ```json
 {
@@ -297,7 +220,7 @@ GET /api/profiles/octocat
 }
 ```
 
-Status Code
+Status:
 
 ```
 404 Not Found
@@ -305,9 +228,49 @@ Status Code
 
 ---
 
-# Database Fields Stored
+# 🧠 Important Notes
 
-The following insights are stored:
+* This API uses the **GitHub Public API**
+* Data is stored in a **MySQL database hosted externally (Railway)**
+* If a user already exists, their data is **updated instead of duplicated**
+* No authentication required to use this API
+* Fully hosted — no local setup required
+
+---
+
+# 🎯 How Others Can Test This API
+
+Anyone can test this project using:
+
+### Option 1: Browser (GET only)
+
+```
+https://github-profile-analyzer-tl77.onrender.com/api/profiles
+```
+
+---
+
+### Option 2: Postman (Recommended)
+
+Steps:
+
+1. Open Postman
+2. Choose method (GET or POST)
+3. Paste endpoint URL
+4. Click **Send**
+5. View JSON response
+
+---
+
+### Option 3: CURL (optional)
+
+```bash
+curl https://github-profile-analyzer-tl77.onrender.com/api/profiles
+```
+
+---
+
+# Database Fields Stored
 
 | Field           | Description                   |
 | --------------- | ----------------------------- |
@@ -326,71 +289,16 @@ The following insights are stored:
 
 # Edge Cases Handled
 
-### GitHub user does not exist
-
-Returns
-
-* HTTP 404
-* `"GitHub user not found"`
-
----
-
-### Duplicate analysis requests
-
-Handled using:
-
-```sql
-ON DUPLICATE KEY UPDATE
-```
-
-Instead of creating duplicate rows, the existing record is updated with the latest data.
-
----
-
-### Empty database
-
-`GET /api/profiles`
-
-returns
-
-```json
-[]
-```
-
-instead of an error.
-
----
-
-### Username not found in local database
-
-`GET /api/profiles/:username`
-
-returns
-
-```json
-{
-  "message": "Not found"
-}
-```
-
-with status code **404**.
-
----
-
-### Database errors
-
-If MySQL encounters an error, the API responds with:
-
-* HTTP 500 Internal Server Error
-
----
-
-### GitHub profile updates
-
-If a GitHub user's followers, repositories, or other profile details change, running the analyze endpoint again updates the stored record to keep the database in sync.
+* GitHub user not found → 404 error
+* Duplicate analysis → updates existing record
+* Empty database → returns empty array `[]`
+* Missing user in DB → returns `"Not found"`
+* MySQL errors → 500 Internal Server Error
 
 ---
 
 # Author
 
-Inarat Hussain
+**Inarat Hussain**
+
+---

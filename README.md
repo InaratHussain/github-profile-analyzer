@@ -391,18 +391,6 @@ If a GitHub user's followers, repositories, or other profile details change, run
 
 ---
 
-# Possible Future Improvements
-
-* GitHub Personal Access Token support (to avoid API rate limits)
-* Pagination for profile listing
-* Search by name
-* Delete analyzed profiles
-* Docker support
-* Unit tests
-* Profile statistics (followers-to-following ratio, account age, etc.)
-
----
-
 # Author
 
-Internship Assignment - GitHub Profile Analyzer API
+Inarat Hussain
